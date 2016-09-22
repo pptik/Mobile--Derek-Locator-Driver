@@ -18,6 +18,8 @@ public interface ApplicationConstants {
     // http url
   //  static final String HTTP_URL = "http://svc-bsts.lskk.ee.itb.ac.id/dev/api/";
     static final String HTTP_URL = "http://167.205.7.226:3000/api/";
+//tes
+
 
 
   static final String FINE_REQUEST="FinERequest";
