@@ -66,14 +66,13 @@ public class RequestRest extends ConnectionHandler {
 
 
     public void registerUser(String name, String email , String user,
-                             String pass,String role,String idunit){
+                             String pass,String role){
         RequestParams params = new RequestParams();
         params.put("name", name);
         params.put("email", email);
         params.put("user", user);
         params.put("pass", pass);
         params.put("role", role);
-        params.put("id_unit", idunit);
 
 
 

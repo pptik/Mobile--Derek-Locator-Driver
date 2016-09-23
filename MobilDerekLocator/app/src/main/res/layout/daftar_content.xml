@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/daftar_activity"
+    tools:context=".Daftar">
+
+    <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp" android:visibility="gone" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/login_progress"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_below="@id/imageView"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="@dimen/formleftmargin"
+            android:layout_marginRight="@dimen/formrightmargin">
+
+            <EditText android:id="@+id/daftar_nama" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="Nama"
+                android:inputType="text" android:maxLines="1"
+                android:singleLine="true"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/formleftmargin"
+            android:layout_marginRight="@dimen/formrightmargin">
+
+            <EditText android:id="@+id/daftar_email" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="Email"
+                android:inputType="textEmailAddress" android:maxLines="1"
+                android:singleLine="true"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/formleftmargin"
+            android:layout_marginRight="@dimen/formrightmargin">
+
+            <EditText android:id="@+id/daftar_hp" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="Nomor Handphone"
+                android:inputType="text" android:maxLines="1"
+                android:singleLine="true"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/formleftmargin"
+            android:layout_marginRight="@dimen/formrightmargin">
+
+            <EditText android:id="@+id/daftar_username" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="Username"
+                android:inputType="text" android:maxLines="1"
+                android:singleLine="true"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/formleftmargin"
+            android:layout_marginRight="@dimen/formrightmargin">
+
+            <EditText android:id="@+id/daftar_password" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="Password"
+                android:inputType="textPassword" android:maxLines="1"
+                android:singleLine="true"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/formleftmargin"
+            android:layout_marginRight="@dimen/formrightmargin">
+
+            <EditText android:id="@+id/daftar_retype_password" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="Ulangi Password"
+                android:inputType="textPassword" android:maxLines="1"
+                android:singleLine="true"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button android:id="@+id/daftar_button" style="?android:textAppearanceSmall"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" android:text="Daftar"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/formleftmargin"
+            android:layout_marginRight="@dimen/formrightmargin"
+            android:layout_below="@+id/li2"
+            android:layout_toEndOf="@+id/login_progress" />
+    </LinearLayout>
+
+
+</RelativeLayout>
