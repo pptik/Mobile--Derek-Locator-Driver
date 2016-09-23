@@ -97,14 +97,21 @@ public class Login extends AppCompatActivity {
             attemptLogin();
         }
     }
+
     private void    attemptLogin(){
         final ProgressDialog dialog = ProgressDialog.show(Login.this, null, "Silahkan Tunggu...", true);
 
 
         params.put("user", username.getText().toString());
-        params.put("password", password.getText().toString());
+        params.put("pass", password.getText().toString());
+        Log.i("user",username.getText().toString());
+        Log.i("pass",password.getText().toString());
         // Make RESTful webservice call using AsyncHttpClient object
+        final int DEFAULT_TIMEOUT = 400 * 1000;
         AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(DEFAULT_TIMEOUT);
+
+        client.addHeader("content-type", "application/x-www-form-urlencoded");
         client.post(ApplicationConstants.HTTP_URL+"login", params,
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http
@@ -158,6 +165,7 @@ public class Login extends AppCompatActivity {
                         dialog.hide();
                         Log.i("error",error.toString());
                         Log.i("error2",content.toString());
+                        Log.i("error3",String.valueOf(statusCode));
                         if (dialog != null) {
                             dialog.dismiss();
                         }
