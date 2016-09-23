@@ -106,4 +106,41 @@ public class RequestRest extends ConnectionHandler {
 
         }, mClient);
     }
+    public void login(String username, String password ){
+        RequestParams params = new RequestParams();
+        params.put("user", username);
+        params.put("pass", password);
+
+
+
+        post("login", params, new JsonHttpResponseHandler() {
+
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
+            }
+
+            @Override
+            public void onSuccess(JSONObject status) {
+                super.onSuccess(status);
+                responseHandler.onSuccessJSONObject(status.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseBody, Throwable e) {
+                super.onFailure(statusCode, headers, responseBody, e);
+                responseHandler.onFailure(e.toString());//e.getMessage());
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                //   dialog.dismiss();
+            }
+
+        }, mClient);
+    }
 }
