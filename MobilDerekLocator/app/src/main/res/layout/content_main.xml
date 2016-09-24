@@ -12,8 +12,33 @@
     tools:context="pptik.org.mobildereklocator.MainActivity"
     tools:showIn="@layout/activity_main">
 
+
+    <Button
+        android:text="Help!"
+        android:textSize="50dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/panic_button" />
+
     <TextView
+        android:gravity="center"
+        android:text="Silahkan Tekan dalam keadaan darurat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="58dp"
+        android:id="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:gravity="center"
+        android:text="Tekan Tombol Sampai Angka Menjadi 0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:layout_below="@+id/panic_button"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

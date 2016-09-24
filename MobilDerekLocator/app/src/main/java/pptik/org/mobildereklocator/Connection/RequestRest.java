@@ -65,11 +65,12 @@ public class RequestRest extends ConnectionHandler {
     }
 
 
-    public void registerUser(String name, String email , String user,
+    public void registerUser(String name, String email ,String nomor_telepon, String user,
                              String pass,String role){
         RequestParams params = new RequestParams();
         params.put("name", name);
         params.put("email", email);
+        params.put("nomor_telepon", nomor_telepon);
         params.put("user", user);
         params.put("pass", pass);
         params.put("role", role);
@@ -112,6 +113,44 @@ public class RequestRest extends ConnectionHandler {
         params.put("pass", password);
 
 
+
+        post("login", params, new JsonHttpResponseHandler() {
+
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
+            }
+
+            @Override
+            public void onSuccess(JSONObject status) {
+                super.onSuccess(status);
+                responseHandler.onSuccessJSONObject(status.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseBody, Throwable e) {
+                super.onFailure(statusCode, headers, responseBody, e);
+                responseHandler.onFailure(e.toString());//e.getMessage());
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                //   dialog.dismiss();
+            }
+
+        }, mClient);
+    }
+    public void panicButtonReport(String username, String location,String latitude,String longitude,String nomor_telepon ){
+        RequestParams params = new RequestParams();
+        params.put("user", username);
+        params.put("location", location);
+        params.put("latitude", latitude);
+        params.put("longitude", longitude);
+        params.put("nomor_telepon", nomor_telepon);
 
         post("login", params, new JsonHttpResponseHandler() {
 

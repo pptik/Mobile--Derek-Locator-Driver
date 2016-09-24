@@ -122,13 +122,14 @@ public class Login extends AppCompatActivity {
 
                         try {
                             JSONObject jObj = new JSONObject(response);
+                            Log.i("response",response.toString());
                             JSONObject childjobj=jObj.getJSONObject("status");
                             boolean status=childjobj.getBoolean("success");
                             if (status) {
                                 JSONObject data = jObj.getJSONObject("data");
                                 String __id=data.getString("_id");
                                 String __name=data.getString("name");
-                                String __email=data.getString("Email");
+                                String __email=data.getString("email");
                                 String __nomorHP=data.getString("nomor_telepon");
                                 String __username=data.getString("user");
                                 //store to sharedpreference

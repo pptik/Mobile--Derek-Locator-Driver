@@ -47,7 +47,9 @@ public class Daftar extends AppCompatActivity {
         daftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            checkBeforeSubmit();
+                daftar.setText("");
+
+                checkBeforeSubmit();
             }
         });
     }
@@ -158,7 +160,7 @@ public class Daftar extends AppCompatActivity {
         });
 
 
-        req.registerUser(nama.getText().toString(),email.getText().toString(),username.getText().toString(),password.getText().toString()
+        req.registerUser(nama.getText().toString(),email.getText().toString(),hp.getText().toString(),username.getText().toString(),password.getText().toString()
         ,"3");
     }
 
