@@ -46,10 +46,18 @@ public class Login extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         String userid = prefs.getString(ApplicationConstants.USER_ID, "");
+        String roleid=prefs.getString(ApplicationConstants.ROLE_ID,"");
         if (!TextUtils.isEmpty(userid)) {
-            Intent i = new Intent(Login.this, MainActivity.class);
-            startActivity(i);
-            finish();
+
+            if (roleid.contains("3")){
+                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(i);
+                finish();
+            }else if (roleid.contains("2")){
+                Intent i = new Intent(getApplicationContext(),DriverMenu.class);
+                startActivity(i);
+                finish();
+            }
         }
        bindingXML();
     }
@@ -132,12 +140,20 @@ public class Login extends AppCompatActivity {
                                 String __email=data.getString("email");
                                 String __nomorHP=data.getString("nomor_telepon");
                                 String __username=data.getString("user");
+                                String __role=data.getString("role");
                                 //store to sharedpreference
-                                storeRegIdinSharedPref(getApplicationContext(),__id,__name,__email,__nomorHP,__username );
+                                storeRegIdinSharedPref(getApplicationContext(),__id,__name,__email,__nomorHP,__username,__role );
 
-                                Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                                startActivity(i);
-                                finish();
+                                if (__role.contains("3")){
+                                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                }else if (__role.contains("2")){
+                                    Intent i = new Intent(getApplicationContext(),DriverMenu.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+
 
                             } else {
 
@@ -198,13 +214,14 @@ public class Login extends AppCompatActivity {
                     }
                 });
     }
-    private void storeRegIdinSharedPref(Context context,String id,String name,String email,String nohp,String username){
+    private void storeRegIdinSharedPref(Context context,String id,String name,String email,String nohp,String username,String roleid){
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(ApplicationConstants.USER_ID, id);
         editor.putString(ApplicationConstants.FULLNAME, name);
         editor.putString(ApplicationConstants.EMAIL_ID, email);
         editor.putString(ApplicationConstants.NOMOR_HP, nohp);
         editor.putString(ApplicationConstants.USERNAME, username);
+        editor.putString(ApplicationConstants.ROLE_ID,roleid);
         editor.commit();
     }
 }

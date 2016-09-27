@@ -182,4 +182,41 @@ public class RequestRest extends ConnectionHandler {
 
         }, mClient);
     }
+    public void updateLokasiDriver(String username, String location,String latitude,String longitude ){
+        RequestParams params = new RequestParams();
+        params.put("user", username);
+        params.put("location", location);
+        params.put("latitude", latitude);
+        params.put("longitude", longitude);
+
+        post("updateuser", params, new JsonHttpResponseHandler() {
+
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
+            }
+
+            @Override
+            public void onSuccess(JSONObject status) {
+                super.onSuccess(status);
+                responseHandler.onSuccessJSONObject(status.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseBody, Throwable e) {
+                super.onFailure(statusCode, headers, responseBody, e);
+                responseHandler.onFailure(e.toString());//e.getMessage());
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                //   dialog.dismiss();
+            }
+
+        }, mClient);
+    }
 }

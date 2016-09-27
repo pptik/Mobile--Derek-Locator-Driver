@@ -1,6 +1,5 @@
 package pptik.org.mobildereklocator;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,16 +8,14 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -39,16 +36,19 @@ import org.osmdroid.views.MapView;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import pptik.org.mobildereklocator.Connection.IConnectionResponseHandler;
 import pptik.org.mobildereklocator.Connection.RequestRest;
 import pptik.org.mobildereklocator.Setup.ApplicationConstants;
 
-public class MainActivity extends AppCompatActivity  implements
+/**
+ * Created by GIGABYTE on 27/09/2016.
+ */
+public class DriverMenu extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
-
-    //keperluan map
     private boolean isFirstZoom = false;
     int permissionCheck =0;
     private static final int INITIAL_REQUEST=1337;
@@ -64,17 +64,14 @@ public class MainActivity extends AppCompatActivity  implements
     GeoPoint currentPoint;
     Marker curMarker;
     IMapController mapController;
-
-    SharedPreferences prefs;
     Context context;
-    Button _panicButton;
-    String __username,__location,__latitude,__longitude,__nomortelepon;
-    int panicbuttonstate=3;
-    @Override
+    SharedPreferences prefs;
+String __username,currentlocation;
+    private Timer timer,timer2;
     protected void onCreate(Bundle savedInstanceState) {
         context = this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.driver_menu_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context = getApplicationContext();
@@ -86,73 +83,43 @@ public class MainActivity extends AppCompatActivity  implements
                 android.Manifest.permission.ACCESS_FINE_LOCATION);
         setLocationBuilder();
         bindingXML();
+        timer2 = new Timer();
+        setAndRunTimer();
+
 
     }
-
+    private void setAndRunTimer(){
+        timer2.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                DriverMenu.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sendLocationPeriodic();
+                    }
+                });
+            }
+        }, 5000, 5000);
+    }
     private void bindingXML(){
         __username=prefs.getString(ApplicationConstants.USERNAME,"");
-        __nomortelepon=prefs.getString(ApplicationConstants.NOMOR_HP,"");
 
-        _panicButton=(Button)findViewById(R.id.panic_button);
-        _panicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              if (checkState()){
-                  checkDataPanicButton();
-                  Log.i("username",__username);
-                  Log.i("location",__location);
-                  Log.i("latitude",__latitude);
-                  Log.i("longitude",__longitude);
-                  Log.i("handphone",__nomortelepon);
-                  sendPanicButtonReport();
-              }
 
-            }
-        });
 
     }
 
-    private boolean checkState(){
-        if (panicbuttonstate==3){
-            panicbuttonstate=2;
-            _panicButton.setText("2");
-            _panicButton.setTextSize(100);
-            return false;
-
-        }
-        if (panicbuttonstate==2){
-            panicbuttonstate=1;
-            _panicButton.setText("1");
-            return false;
-        }
-        if (panicbuttonstate==1){
-            _panicButton.setText("0");
-
-
-            _panicButton.setTextSize(50);
-            _panicButton.setText("Help!");
-            panicbuttonstate=3;
-            return true;
-        }
-        return false;
-    }
-    private void checkDataPanicButton(){
+    private void sendLocationPeriodic(){
         try {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1);
             String cityName = addresses.get(0).getAddressLine(0);
             String stateName = addresses.get(0).getAddressLine(1);
             String countryName = addresses.get(0).getAddressLine(2);
-            __location=cityName+", " +stateName+", " +countryName;
+            currentlocation=cityName+", " +stateName+", " +countryName;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        __latitude=String.valueOf(currentLatitude);
-        __longitude=String.valueOf(currentLongitude);
-    }
-
-    private void sendPanicButtonReport(){
-        RequestRest req = new RequestRest(MainActivity.this, new IConnectionResponseHandler(){
+        RequestRest req = new RequestRest(DriverMenu.this, new IConnectionResponseHandler(){
             @Override
             public void OnSuccessArray(JSONArray result){
 
@@ -161,7 +128,9 @@ public class MainActivity extends AppCompatActivity  implements
             public void onSuccessJSONObject(String result){
                 try {
                     JSONObject obj = new JSONObject(result);
-                    Toast.makeText(MainActivity.this, "Laporan Telah Dikirim, anda akan dihubungi secepatnya ", Toast.LENGTH_LONG).show();
+                    Log.i("result",result);
+                    Log.i("Update Lokasi ",currentlocation);
+                    //Toast.makeText(DriverMenu.this, "Laporan Telah Dikirim, anda akan dihubungi secepatnya ", Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e){
 
@@ -169,7 +138,8 @@ public class MainActivity extends AppCompatActivity  implements
             }
             @Override
             public void onFailure(String e){
-                Toast.makeText(MainActivity.this, "Maaf Laporan gagal dikirim, silahkan coba lagi atau hubungi 0982*** ", Toast.LENGTH_LONG).show();
+                Log.i("Update Lokasi ","gagal");
+            //    Toast.makeText(DriverMenu.this, "Maaf Laporan gagal dikirim, silahkan coba lagi atau hubungi 0982*** ", Toast.LENGTH_LONG).show();
             }
             @Override
             public void onSuccessJSONArray(String result){
@@ -177,9 +147,8 @@ public class MainActivity extends AppCompatActivity  implements
         });
 
 
-        req.panicButtonReport(__username,__location,__latitude,__longitude,__nomortelepon);
+        req.updateLokasiDriver(__username,currentlocation,String.valueOf(currentLatitude),String.valueOf(currentLatitude));
     }
-
     private void setLocationBuilder(){
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -299,7 +268,7 @@ public class MainActivity extends AppCompatActivity  implements
         }
         //
     }
-    private void storeLastLocation(Context context, String latitude_,String longitude_) {
+    private void storeLastLocation(Context context, String latitude_, String longitude_) {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(ApplicationConstants.USER_LATITUDE, latitude_);

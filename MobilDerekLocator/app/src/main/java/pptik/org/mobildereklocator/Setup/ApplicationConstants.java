@@ -26,6 +26,7 @@ public interface ApplicationConstants {
   static final String USER_PREFS_NAME="UserDetails";
   static final String USER_ID="UsErId";
   static final String FULLNAME="___FULLNAME!123";
+    static final String ROLE_ID="__rOle__id";
   static final String EMAIL_ID = "eMailId";
   static final String NOMOR_HP = "__noMor_hp";
   static final String USERNAME="__USERNAME!123";
