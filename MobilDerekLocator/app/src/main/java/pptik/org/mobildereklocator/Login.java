@@ -4,6 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,12 +16,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.ionicons_typeface_library.Ionicons;
+
+import net.qiujuer.genius.blur.StackBlur;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,23 +36,26 @@ import org.json.JSONObject;
 import pptik.org.mobildereklocator.Connection.IConnectionResponseHandler;
 import pptik.org.mobildereklocator.Connection.RequestRest;
 import pptik.org.mobildereklocator.Setup.ApplicationConstants;
+import pptik.org.mobildereklocator.Utilities.PictureFormatTransform;
 
 /**
  * Created by GIGABYTE on 22/09/2016.
  */
 public class Login extends AppCompatActivity {
-
+    View view1;
+    private ImageView logousername,logopassword;
     SharedPreferences prefs;
     EditText username,password;
     TextView fab;
     Button login;
     RequestParams params = new RequestParams();
+    private Context context;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         prefs = getSharedPreferences(ApplicationConstants.USER_PREFS_NAME,
                 Context.MODE_PRIVATE);
-
+        context=this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         String userid = prefs.getString(ApplicationConstants.USER_ID, "");
@@ -80,6 +93,23 @@ public class Login extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        logousername=(ImageView)findViewById(R.id.imageView2);
+        logopassword=(ImageView)findViewById(R.id.imageView5);
+        logousername.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_person)
+                        .color(context.getResources().getColor(R.color.light_blue_500))
+                        .sizeDp(60))
+                );
+        logopassword.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_vpn_key)
+                        .color(context.getResources().getColor(R.color.light_blue_500))
+                        .sizeDp(60))
+                );
+        Bitmap bg= BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.bg);
+        bg= StackBlur.blurNativelyPixels(bg,8,false);
+        view1=(View)findViewById(R.id.opacityFilter);
+        view1.setBackground(new BitmapDrawable(bg));
     }
     private void loginCheck(){
 
@@ -89,16 +119,18 @@ public class Login extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if (TextUtils.isEmpty(username.getText().toString())) {
-            username.setError("Silahkan Diisi");
-            focusView = username;
-            cancel = true;
-        }
         if (TextUtils.isEmpty(password.getText().toString())) {
             password.setError("Silahkan Diisi");
             focusView = password;
             cancel = true;
         }
+
+        if (TextUtils.isEmpty(username.getText().toString())) {
+            username.setError("Silahkan Diisi");
+            focusView = username;
+            cancel = true;
+        }
+
         if (cancel) {
             focusView.requestFocus();
         } else {

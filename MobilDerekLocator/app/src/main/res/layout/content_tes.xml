@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/content_tes"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:showIn="@layout/login_activity"
-    tools:context=".Login">
-
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="pptik.org.mobildereklocator.tes"
+    tools:showIn="@layout/activity_tes">
 
     <View
         android:id="@+id/opacityFilter"
@@ -15,6 +16,15 @@
         android:layout_alignParentBottom="true"
         android:alpha="0.9">
     </View>
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher"
+        android:id="@+id/imageView"
+        android:layout_marginTop="98dp"
+        android:layout_below="@+id/login_progress"
+        android:layout_centerHorizontal="true" />
 
 
     <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
@@ -22,8 +32,6 @@
         android:layout_marginBottom="8dp" android:visibility="gone" />
 
     <LinearLayout
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:padding="10dp"
         android:background="@drawable/layout_bg_login"
         android:id="@+id/li3"
@@ -88,8 +96,6 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="Login"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:background="@color/light_blue_500"
@@ -118,16 +124,6 @@
             android:id="@+id/fab"
             android:textColor="@android:color/holo_orange_light" />
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher"
-        android:id="@+id/imageView"
-        android:layout_marginTop="146dp"
-        android:layout_below="@+id/login_progress"
-        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

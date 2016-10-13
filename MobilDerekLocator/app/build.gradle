@@ -71,5 +71,6 @@ dependencies {
     }
     compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
     compile 'com.mikhaellopez:circularimageview:3.0.2'
+    compile "net.qiujuer.genius:blur:2.0.0-beta4"
 }
 apply plugin: 'com.google.gms.google-services'

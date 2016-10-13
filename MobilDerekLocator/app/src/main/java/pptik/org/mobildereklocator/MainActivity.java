@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -28,6 +31,8 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import net.qiujuer.genius.blur.StackBlur;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +52,7 @@ import pptik.org.mobildereklocator.Setup.ApplicationConstants;
 public class MainActivity extends AppCompatActivity  implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
-
+    View view1;
     //keperluan map
     private boolean isFirstZoom = false;
     int permissionCheck =0;
@@ -109,6 +114,12 @@ public class MainActivity extends AppCompatActivity  implements
 
             }
         });
+
+        Bitmap bg= BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.bg);
+        bg= StackBlur.blurNativelyPixels(bg,8,false);
+        view1=(View)findViewById(R.id.opacityFilter);
+        view1.setBackground(new BitmapDrawable(bg));
 
     }
 
